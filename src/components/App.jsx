@@ -107,15 +107,15 @@ const App = () => {
                 //---------------------------CODETAG---------------------------------
                 const codeTag = (text) => {
                     let codeT, before, after, insideT;
-                    if(text.match(/(?<backticks>`+)([^`].[^`])+\k<backticks>(?!`+)/) != null){
+                    if(text.match(/(?<backticks>`+)(\w|\s)+\k<backticks>(?!`+)/) != null){
                         console.log(true)
-                        before = text.match(/.*?(?<backticks>`+)(?=([^`].[^`])+\k<backticks>(\w|\s)*)/sm)[0].replace(/`+/, "");
+                        before = text.match(/.*?(?<backticks>`+)(?=(\w|\s)+\k<backticks>(\w|\s)*)/sm)[0].replace(/`+/, "");
                         console.log("hi")
-                        after = text.match(/(?<=(\w|\s)*(?<backticks>`+).+)\k<backticks>.*/sm) != null? text.match(/(?<=(\w|\s)*(?<backticks>`+)([^`].[^`])+)\k<backticks>([^`].)*/s)[0].replace(/`+/, ""): "";
+                        after = text.match(/(?<=(\w|\s)*(?<backticks>`+)([^`].)+)\k<backticks>.*/sm) != null? text.match(/(?<=(\w|\s)*(?<backticks>`+)([^`].)+)\k<backticks>([^`].)*/s)[0].replace(/`+/, ""): "";
                         console.log("here after")
-                        insideT = text.match(/(?<=(.[^`])*(?<backticks>`+))([^`].[^`])+(?=\k<backticks>([^`].)*)/) != null ? text.match(/(?<=(\w|\s)*(?<backticks>`+))([^`].)+(?=\k<backticks>(.[^`])*)/)[0] : "";
+                        insideT = text.match(/(?<=(.[^`])*(?<backticks>`+))([^`].)+(?=\k<backticks>([^`].)*)/) != null ? text.match(/(?<=(\w|\s)*(?<backticks>`+))([^`].)+(?=\k<backticks>(.[^`])*)/)[0] : "";
                         
-                        console.log(before, "BEFORE", after, "AFTER", text.match(/(?<=(\w|\s)*(?<backticks>`+))([^`].)+(?=\k<backticks>([^`].)*)/), "TEEEEEXT")
+                        console.log(before, "BEFORE", after, "AFTER", insideT, "TEEEEEXT")
                         codeT = codeTag(after);
                         return `${before} <code>${insideT}</code> ${codeT}`;
                     } else {
