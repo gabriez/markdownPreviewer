@@ -12,7 +12,12 @@
   "license": "ISC",
   "dependencies": {
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-icons": "^4.7.1",
+    "react-particles": "^2.7.1",
+    "react-tsparticles": "^2.7.1",
+    "tsparticles": "^2.7.1",
+    "tsparticles-slim": "^2.7.1"
   },
   "devDependencies": {
     "@babel/core": "^7.19.3",

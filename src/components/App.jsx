@@ -1,23 +1,79 @@
-import React, {useState, useEffect} from "react"
-
+import React, {useState, useEffect, useCallback, useMemo} from "react"
+import Particles from "react-tsparticles";
+import { loadFull } from "tsparticles"
+import {IoMdResize} from "react-icons/io"
+import "../styles/index.css"
        
                      
 
 const App = () => {
     const [text, setText] = useState([]);
-    const [inputText, setInputText] = useState("");  
+    const [inputText, setInputText] = useState(`### aasda
+## asdasd`);  
+    const [buttonPreview, setButtonPreview] = useState(false);
+    const [buttonEditor, setButtonEditor] = useState(false);
 
-    const convertTextp = (item) => {
-        let textReturn; 
-        
-        const paragraphito = (text) => {
-            if (text.match(/^(\r\n|\n|\r)(###)$/m) != null) {
-                console.log("It Works!")
-            }
+    let particlesInit = useCallback( async engine => {
+        console.log(engine);
 
+        await loadFull(engine);
+    }, [])
+
+    let particlesLoaded = useCallback( async container => {
+        await console.log(container);
+    }, [])
+
+    let options = useMemo(()=>{
+        return {
+            background: {
+                color: "#162726"
+            },
+            fullscreen: {
+                enable: true,
+                zIndex: -1
+            },
+            interactivity: {
+                events: {
+                    onClick: {
+                        enable: true,
+                        mode: "push"
+                    } 
+                }, 
+                modes: {
+                    push: { quantity: 20 },
+                    remove: {
+                        quantity: 15
+                    }
+                }
+            },
+            particles: {
+                links: {
+                    enable: true,
+                    distance: 68,
+                },
+                move: {
+                    enable: true,
+                    speed: {min: 1, max: 3}
+                },
+                opacity: {
+                    value: {min: 0.2, max:0.8}
+                },
+                size: {
+                    value: {min: 1, max:2.5}},
+                reduceDuplicates:{
+                    enable: true
+                },
+                number: {
+                    limit: 120
+                },
+                destroy: {
+                    enable: true
+                }
+
+            },
+            fpsLimit: 40
         }
-
-    }
+    }, [])
 
     useEffect(
         () => {
@@ -128,118 +184,61 @@ const App = () => {
                 textReturn = codeTag(anchorTag(paragraph(item)));
  
                 console.log(textReturn);
-                
 
-
-
-
-
-
+        
 
                 return textReturn;
             }
            
             setText(convertText(inputText));
 
-
-           /* 
-            setText(lineText.map(
-                item => {
-                    let textReturn;
-
-
-                    // Code tag selection
-
-                    const codeTag = (text) => {
-                        let codeT;
-                        if(text.match(/```.+```/) != null){
-                            codeT = text.match(/(?<=```).+(?=```)/);
-                            console.log(`<pre><code>${codeT}</code></pre>`);
-                        } else if(text.match(/``.+``/) != null){
-                            codeT = text.match(/(?<=``).+(?=``)/);
-                            console.log(`<code>${codeT}</code>`);
-                        } else if (text.match(/^`.+`$/) != null){
-                            codeT = text.match(/(?<=`).+(?=`)/);
-                            console.log(`<code>${codeT}</code>`);
-                        } else {
-                            return; 
-                        }
-                    }
-                    codeTag(item);
-
-                    // Anchor tag selection
-
-                    const anchorTag = (text) => {  
-                        
-                        if (/\[.+\]\(.+\)/.test(text)){
-                            
----------------------- COMENTAR---------------
-                            let beforeAnchor, afterAnchor;
-                            beforeAnchor = text.match(/.*?(?=\[.+\]\(.+\))/);
-                            afterAnchor = text.match(/(?<= *\[.+\]\(.+\) *).*//*);
-                           
-                            let anchorMix = anchorTag(afterAnchor[0]);
-                            // console.log(anchorMix, count)
-
-                            let url = text.match(/(?<=\[.+\]\( ?).+?(?=\))/);
-                            
-                            url = /(https:\/\/|http:\/\/)/.test(url) ? url : "http://"+url[0];
-
-                            return `<span>${beforeAnchor[0]}</span>
-                            <a href="${url}"
-                            target="_blank">${text.match(/(?<=\[).+?(?= ?\]\(.+\))/)}</a>
-                            ${anchorMix}
-                            `
-                        } else {
-
-                            return text;
-                        }
-                    }
-
-                    textReturn = anchorTag(item);
-                    console.log(textReturn)
-
-                    // Headings selection
-                    if(/#{4,}/.test(textReturn)){
-                        textReturn = textReturn;
-                    } 
-                    else if (/#{3}/.test(textReturn)) {
-                       ---------------------- COMENTAR---------------
-                        let newText = textReturn.match(/(?<=(<span>)?#{3}).*//*s) === null ? [""] : textReturn.match(/(?<=(<span>)?#{3}).*//*s);
-                        textReturn = textReturn.match(/<\/span>.*<a href=/s) === null? `<h3>${newText}</h3>`:`<h3><span>${newText}</h3>`;
-                           
-                    }              
-                    else if (/#{2}/.test(textReturn)) {
-                        
-                        let newText = textReturn.match(/(?<=(<span>)?##).*//*s) === null ? [""] : textReturn.match(/(?<=(<span>)?##).*//*s);
-                        textReturn = textReturn.match(/<\/span>.*<a href=/s) === null? `<h2>${newText}</h2>`:`<h2><span>${newText}</h2>`;
-                    } 
-
-                    else if (/#/.test(textReturn)){
-                       
-                        let newText = textReturn.match(/(?<=(<span>)?#).*//*s) === null ? [""] : textReturn.match(/(?<=(<span>)?#).*//*s);
-                        textReturn = textReturn.match(/<\/span>.*<a href=/s) === null? `<h1>${newText[0]}</h1>` :  `<h1><span>${newText[0]}</h1>`;
-                        
-                    } 
-                    
-                    console.log(textReturn)
-                    return textReturn;
-                }
-            ))
-
-         */
+            
         }, [inputText]
     )
-   
+    
+    useEffect(()=>{
+        function defineHeight () {
+            // We execute the same script as before
+            let vh = window.innerHeight * 0.01;
+            document.documentElement.style.setProperty('--window-height', `${vh}px`);
+            console.log(vh)
+          }
+
+        window.addEventListener('resize', defineHeight);
+
+          return () => {
+            window.removeEventListener('resize', defineHeight)
+          }
+    })
+
     return (
-        <React.StrictMode>
-            <div>
-                <textarea name="" id="editor" cols="30" rows="10" onChange={e => setInputText(e.target.value)}></textarea>
+         <React.StrictMode>
+        
+            <Particles init={particlesInit} loaded={particlesLoaded} options={options} />
+            <div id="editorBox" className={buttonEditor && !buttonPreview ? "editorMax" : !buttonEditor && !buttonPreview? "editorMin": "editorNone"}>
+                <div className="topBox">
+                    <p>Editor</p>
+                    <button onClick={() => {setButtonEditor(!buttonEditor); setButtonPreview(false)}}>
+                        <IoMdResize size={20} />
+                    </button>
+                </div>
+                <textarea name="" 
+                id="editor"
+                onChange={e => setInputText(e.target.value)}
+                value={inputText}>
+                </textarea>
             </div>
-            <div dangerouslySetInnerHTML={{__html:text}}  id="preview">
-                
+            <div id="previewBox" className={buttonPreview && !buttonEditor? "previewMax" : !buttonEditor && !buttonPreview? "previewMin": "previewNone"}>
+                <div className="topBox">
+                    <p>Preview</p>
+                    <button onClick={() => {setButtonPreview(!buttonPreview); setButtonEditor(false)}}>
+                        <IoMdResize size={20} />
+                    </button>
+                </div>
+                <div className="preview" dangerouslySetInnerHTML={{__html:text}}></div>
             </div>
-        </React.StrictMode>
+      
+         </React.StrictMode>
     )
 }
 
