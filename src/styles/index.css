@@ -90,16 +90,26 @@ button:hover {
     color: #77ECF2;
 }
 
-img {
+.preview img {
     max-width: 100%;
 }
 
-a {
+.preview a {
     color: #77ECF2;
 }
 
-pre {
+.preview pre {
     background: black;
     color: #97ffe1;
+}
+
+.preview table {
+    border-collapse: collapse;
+}
+
+.preview th, .preview td {
+    border: 2px solid #77ECF2;
+    padding-left: 5px;
+    padding-right: 5px;
 }
 
