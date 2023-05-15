@@ -98,7 +98,7 @@ button:hover {
     color: #77ECF2;
 }
 
-.preview pre {
+.preview pre, .preview code {
     background: black;
     color: #97ffe1;
 }
