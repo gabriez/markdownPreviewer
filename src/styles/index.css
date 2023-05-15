@@ -93,3 +93,13 @@ button:hover {
 img {
     max-width: 100%;
 }
+
+a {
+    color: #77ECF2;
+}
+
+pre {
+    background: black;
+    color: #97ffe1;
+}
+
