@@ -2,6 +2,7 @@ import React, {useState, useEffect, useCallback, useMemo} from "react"
 import Particles from "react-tsparticles";
 import { loadFull } from "tsparticles"
 import {IoMdResize} from "react-icons/io"
+import {marked} from "marked";
 import "../styles/index.css"
        
                      
@@ -189,10 +190,12 @@ const App = () => {
 
                 return textReturn;
             }
-           
-            setText(convertText(inputText));
+           //
+           // THIS IS FOR MY OWN MARKED
+           //
+            // setText(convertText(inputText));
 
-            
+            setText(marked(inputText));
         }, [inputText]
     )
     
@@ -225,7 +228,8 @@ const App = () => {
                 <textarea name="" 
                 id="editor"
                 onChange={e => setInputText(e.target.value)}
-                value={inputText}>
+                value={inputText}
+                >
                 </textarea>
             </div>
             <div id="previewBox" className={buttonPreview && !buttonEditor? "previewMax" : !buttonEditor && !buttonPreview? "previewMin": "previewNone"}>
