@@ -34,9 +34,14 @@ rgb(229,5,228)*/
     padding: 5px 10px;
 }
 
+.editorMax{
+    min-height: 97vh;
+    max-height: 97vh;
+}
+
 .editorMax > #editor {
-    min-height: calc(90vh - 37px);
-    max-height: calc(90vh - 37px);
+    min-height: calc(97vh - 37px);
+    max-height: calc(97vh - 37px);
 }
 
 .editorMin{
@@ -47,10 +52,11 @@ rgb(229,5,228)*/
     min-height: 40vh
 }
 
-.editorMax, .previewMax > .preview{
+.previewMax > .preview{
     min-height: 90vh;
-    max-height: 90vh;
+    max-height: fit-content;
 }
+
 
 .editorNone, .previewNone{
     display:none;
